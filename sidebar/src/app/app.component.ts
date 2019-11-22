@@ -67,65 +67,49 @@ export class AppComponent {
             //     var base64data = reader.result;                
             //     console.log(base64data);
             // }
-
-          
-          
-          console.log(downloadUrl);
-          
-          this.links.push({ links: this.sanitizer.bypassSecurityTrustUrl(downloadUrl) });
+            console.log(downloadUrl);
+           this.links.push({ links: this.sanitizer.bypassSecurityTrustUrl(downloadUrl),file_name:this.name,extension:exten });
           //  //download.setAttribute( "href", downloadUrl );
-         
-
-          
-          console.log(message.body);
+        console.log(message.body);
         }
       })
 
     });
+}
 
-
-
-  }
   handleFileSelect(evt) {
 
     var f = evt.target.files[0];
     this.ext=evt.target.files[0].type;
-    //console.log(this.ext);
-    //this.ext=f.split('.').pop();
     this.fileName = evt.target.files[0].name;
     var reader = new FileReader();
-    //var arrayoffile=reader.readAsArrayBuffer(f);
-    //console.log(arrayoffile.length);
     let self = this;
     reader.onload = (function (theFile) {
       let me = self;
       return function (e) {
         var binaryData = e.target.result;
         var base64string = window.btoa(binaryData);
-        // document.getElementById('base64').innerHTML = base64string;
-        //  console.log(base64string);
         me.message = base64string;
-        
-        
-      // console.log(this.ext);
-
       }
 
     })
-      //this.sendMessage(this.base64string);
+      
       (f);
     reader.readAsBinaryString(f);
-    // console.log(this.base64string);
-    //this.sendMessage(this.base64string);
+   
   }
+
+  // clickAndDisable(link) {
+  //   // disable subsequent clicks
+  //   link.onclick = function(event) {
+  //      event.preventDefault();
+  //   }
+  // }   
 
   sendMessage(message) {
     // console.log('inside method');
     console.log(this.message)
     console.log(this.ext);
-    // console.log(this.base64string);
-    // var base64str=message;
-    //this.ext;
     const message1: Message = {
        base64Str:this.message,
        ext1: this.ext,
@@ -135,8 +119,5 @@ export class AppComponent {
 
    // this.stompClient.send("/app/send/message", {}, this.message);
    this.stompClient.send("/app/send/message", {}, JSON.stringify(message1));
-
-    //    // console.log(message);
-    //     //  $('#input').val('');
-  }
+   }
 }

@@ -1,3 +1,12 @@
+<html>
+
+<head>
+    <script>
+        function myFunction() {
+            document.getElementById("myBtn").disabled = true;
+        }
+    </script>
+</head>
 <div class="send-button">
 
     <button class="send" (click)="sendMessage()">send
@@ -21,7 +30,7 @@
 
     <!-- </mat-sidenav-content> -->
     <p style="float: right"><button mat-button (click)="sidenav.toggle()">file</button></p>
-
+    <!-- <button id="myBtn">My Button</button> -->
 
     <mat-sidenav #sidenav mode="side" [(opened)]="opened" position="end" style="width: 20%">
         <p>Sidenav content</p>
@@ -29,9 +38,10 @@
         <p *ngFor="let link of links">
             <!-- {{link.links}} -->
 
-            <a id="link" target='_blank' download [href]="link.links"> <button class="btn">{{this.name}}</button> </a>
+            <a id="link" target='_blank' download [href]="link.links"> <button id="btn1" class="btn" onclick="myFunction(this)">{{link.file_name}}</button> </a>
 
         </p>
+
 
         <!-- </mat-nav-list> -->
         <!-- <a id="link" download href='#' #link>Download</a> -->
@@ -45,3 +55,5 @@
 
 
 </mat-sidenav-container>
+
+</html>
