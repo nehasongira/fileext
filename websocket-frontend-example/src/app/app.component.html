@@ -1,0 +1,35 @@
+<!-- <div style="text-align:center">
+    <h1>
+        Welcome to {{title}}!
+    </h1>
+    <div class="chat-container">
+        <div class="chat">
+            <div class="message"></div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="footer"></div> -->
+<div class="send-button">
+
+    <button class="send" (click)="sendMessage()">
+    </button>
+    <!-- <input id="input" type="text" #input> -->
+    <input #input type="file" id="files" name="files" (change)="handleFileSelect($event)" />
+
+    <br/>
+    <!-- <textarea id="base64" rows="5"></textarea> -->
+    <a download href='#' #link>Download</a>
+</div>
+
+<!-- </div> -->
+
+<!-- <div style="text-align:center; margin-top: 150px;">
+
+    <h1 style="font-size: 4em;">
+
+        Notifications : <span style="color: red;">+{{ notifications }}</span>
+
+    </h1>
+
+</div> -->
