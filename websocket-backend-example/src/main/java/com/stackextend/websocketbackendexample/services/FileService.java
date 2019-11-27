@@ -1,13 +1,16 @@
 package com.stackextend.websocketbackendexample.services;
 
 import com.stackextend.websocketbackendexample.FileRepository;
-import com.stackextend.websocketbackendexample.model.File;
+import com.stackextend.websocketbackendexample.model.Filess;
 import org.slf4j.Logger;
+import java.io.File;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,25 +29,62 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    public void storeFile(MultipartFile file,String fromid,String toid,String filename, String ext) throws IOException {
-        Path filePath = Paths.get(FILE_DIRECTORY + "/" + file.getOriginalFilename());
+    public void storeFile(MultipartFile file,String fromid,String toid,String filename, String ext,String lastext) throws IOException {
+        String name = fromid+ "_" + toid+"_"+file.getOriginalFilename();
+        Path filePath = Paths.get(FILE_DIRECTORY + "/" + name);
         System.out.println(fromid);
         System.out.println("hello");
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         String path=filePath.toString();
-        File files = new File();
+        Filess files = new Filess();
         files.setFilePath(path);
         files.setFromid(fromid);
         files.setToid(toid);
-        files.setFilename(filename);
+        files.setFilename(name);
         files.setExt(ext);
+        files.setLastext(lastext);
         this.fileRepository.save(files);
     }
-    public void getfilepath()
-    {
-        File filespath=new File();
 
+    public Resource getFileSystem(String filename,String lastext ,HttpServletResponse response) {
+        System.out.println("inside controller-service");
+        return getResource(filename,lastext, response);
     }
+
+    private Resource getResource(String filename,String lastext ,HttpServletResponse response) {
+
+//        System.out.println(filename);
+//        String filepathfromMongo=this.fileRepository.findext(filename).getExt();
+////        System.out.println(filepathfromMongo);
+//        //String filepathfromMongo="abc_efg_18augmeal.pdf";
+       String FILE_PATH=FILE_DIRECTORY+'/'+filename+lastext;
+       System.out.println(FILE_PATH);
+        //Path pa=Paths.get(FILE_PATH);
+        File file = new File(FILE_PATH);
+        //File file = new File("/home/cgi/trial/abc_efg_3ac.pdf");
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+        response.setHeader("fileName", filename);
+        Resource resource = null;
+//        String pathss=FILE_DIRECTORY+filename+"."+"pdf";
+//        Path pa=Paths.get(pathss);
+        //resource = new FileSystemResource(FILE_DIRECTORY + filename+"."+"pdf");
+        System.out.println(resource);
+        System.out.println("inside controller resource");
+        return new FileSystemResource(file);
+       // return resource;
+    }
+//    public String getfilepath(String fromid,String toid,String filename)
+//    {
+//        String filepathfromMongo=this.fileRepository.findPathWithFromidAndToid(fromid, toid, filename).getFilePath();
+//        System.out.println(filepathfromMongo);
+//        return filepathfromMongo;
+//
+//
+//    }
+//    public Resource getFileSystem(String filename, HttpServletResponse response) {
+//        return getResource(filename, response, ResourceType.FILE_SYSTEM);
+//    }
 
 
 

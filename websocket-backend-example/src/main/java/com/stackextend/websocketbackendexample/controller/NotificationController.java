@@ -7,8 +7,16 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @CrossOrigin("*")
 @RestController
 public class NotificationController {
@@ -20,22 +28,37 @@ public class NotificationController {
         this.template = template;
         this.fileService = fileService;
     }
-//
-//    @MessageMapping("/send/message")
-//    public void onReceivedMessage(@Payload String message){
-//
-//        this.template.convertAndSend("/chat",  message);
-//    }
+
+    @MessageMapping("/send/message")
+    public void onReceivedMessage(@Payload String message){
+
+        this.template.convertAndSend("/chat",  message);
+    }
     @PostMapping(value = "/api/files")
-    public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam String fromid,@RequestParam String toid,@RequestParam String filename,@RequestParam String ext) throws IOException {
-        this.fileService.storeFile(file,fromid,toid,filename,ext);
+    public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam String fromid,@RequestParam String toid,@RequestParam String filename,@RequestParam String ext,@RequestParam String lastext) throws IOException {
+        this.fileService.storeFile(file,fromid,toid,filename,ext,lastext);
 
     }
-    @GetMapping(value = "api/download")
-    public void getfilepath()
-    {
-        this.fileService.getfilepath();
+
+    @GetMapping(value = "/api/download/{filename}/{lastext}")
+    public Resource getFileFromFileSystem(@PathVariable String filename,@PathVariable String lastext, HttpServletResponse response) {
+        System.out.println("inside controller");
+        return fileService.getFileSystem(filename,lastext, response);
+
     }
+
+//    public Resource getfilepath(@RequestParam String filename)
+//    {
+//        String filepathfromMongo1=this.fileService.getfilepath(fromid,toid,filename);
+//        Path p1 = Paths.get(filepathfromMongo1);
+//        File f = new File(filepathfromMongo1);
+//        String fname=f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\")+1);
+//        return fileService.getFileSystem(fname);
+//        System.out.println(fname);
+//
+//        System.out.print(filepathfromMongo1);
+//
+//    }
 
 
 //////////////////////////////////////////////////////////////////////

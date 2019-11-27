@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
 import { WebSocketService } from './websocket.service';
+import { FormsModule}  from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
    
   ],
   imports: [
+    FormsModule,
     FileUploadModule,
     BrowserModule,
     AppRoutingModule,

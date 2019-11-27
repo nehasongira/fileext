@@ -4,14 +4,16 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class File {
+public class Filess {
 
-    public File(String filePath, String fromid, String toid, String filename, String ext) {
+
+    public Filess(String filePath, String fromid, String toid, String filename, String ext, String lastext) {
         this.filePath = filePath;
         this.fromid = fromid;
         this.toid = toid;
         this.filename = filename;
         this.ext = ext;
+        this.lastext = lastext;
     }
 
     @Id
@@ -20,6 +22,17 @@ public class File {
     private String toid;
     private String filename;
     private String ext;
+    private String lastext;
+
+    public String getLastext() {
+        return lastext;
+    }
+
+    public void setLastext(String lastext) {
+        this.lastext = lastext;
+    }
+
+
 
     public String getFilePath() {
         return filePath;
@@ -28,7 +41,7 @@ public class File {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-    public File() {
+    public Filess() {
     }
 
 

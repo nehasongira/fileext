@@ -1,12 +1,24 @@
 <html>
 
 <head>
-    <script>
+    <!-- <script>
         function myFunction() {
             document.getElementById("myBtn").disabled = true;
         }
-    </script>
+    </script> -->
 </head>
+
+<form (ngSubmit)="downloadFileSystem()">
+    <h2>button here</h2>
+    <p>From {{this.fid}}</p>
+    <!-- <input [(ngModel)]="fileSystemName" name="file-system"> -->
+    <button [disabled]="!fileSystemName">Download file system</button>
+    <button>{{this.name}}</button>
+    <br>
+    <br>
+</form>
+
+
 <div class="send-button">
 
     <button class="send" (click)="sendMessage()">send
@@ -18,6 +30,9 @@
     <!-- <textarea id="base64" rows="5"></textarea> -->
     <!-- <a download href='#' #link>Download</a> -->
 </div>
+<!-- <div class="download-class">
+    <a id="link" target='_blank' download [href]="link.links"> <button id="btn1" class="btn" onclick="myFunction(this)">{{link.file_name}}</button> </a>
+</div> -->
 <!-- <form method="post" enctype="multipart/form-data" action="/upload">
     <table>
         <tr>
@@ -56,16 +71,16 @@
     <mat-sidenav #sidenav mode="side" [(opened)]="opened" position="end" style="width: 20%">
         <p>Sidenav content</p>
         <!-- <mat-nav-list> -->
-        <p *ngFor="let link of links">
-            <!-- {{link.links}} -->
+        <!-- <p *ngFor="let link of links">
+            
 
             <a id="link" target='_blank' download [href]="link.links"> <button id="btn1" class="btn" onclick="myFunction(this)">{{link.file_name}}</button> </a>
 
-        </p>
+        </p> -->
 
 
         <!-- </mat-nav-list> -->
-        <!-- <a id="link" download href='#' #link>Download</a> -->
+        <a id="link" download href='#' #link>Download</a>
 
 
 
