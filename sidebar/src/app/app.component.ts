@@ -127,7 +127,7 @@ downloadFileSystem() {
       console.log("shhh")
       console.log(filename);
       console.log(ext2);
-      this.saveFile(response.body,'application/pdf');
+      this.saveFile(response.body,this.ext);
       //this.saveToFileSystem(event,'application/pdf');
     });
 }
@@ -142,7 +142,7 @@ downloadFileSystem() {
 //   // saveAs(blob, filename);
 // }
 
-saveFile(data: any, filename?: string, ext3? : string) {
+saveFile(data: any,ext3? : string) {
   
   const blob = new Blob([data], {type: ext3 || 'application/octet-stream'});
   console.log(blob);
