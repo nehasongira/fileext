@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import {FormGroup} from  '@angular/forms';
 import { WebSocketService } from './websocket.service';
 import { Links } from './links';
 import { DomSanitizer } from '@angular/platform-browser';
+import {FileUploader} from 'ng2-file-upload';
+
 export interface Message {
   
   base64Str:string;
@@ -17,6 +20,12 @@ export interface Message {
 
 
 export class AppComponent {
+   public userFile:any =File;
+  // @ViewChild('fileInput') fileInput: ElementRef;
+ 
+  // uploader: FileUploader;
+  // isDropOver: boolean;
+
   private base64string: String = "abc";
   private base64str: String = " ";
   public notifications = 0;
@@ -25,6 +34,8 @@ export class AppComponent {
   private ext: string;
   private fileName:string;
   private name: string;
+  private fromId: string="abc";
+  private toId: string="efg";
   links: Links[] = [];
   constructor(
     private webSocketService: WebSocketService,
@@ -76,20 +87,41 @@ export class AppComponent {
 
     });
 }
-
+fileupload(event)
+{
+  const file=event.target.files[0];
+  this.ext=event.target.files[0].type;
+  this.fileName = event.target.files[0].name;
+  this.userFile=file;
+}
   handleFileSelect(evt) {
 
     var f = evt.target.files[0];
     this.ext=evt.target.files[0].type;
     this.fileName = evt.target.files[0].name;
+    var size=evt.target.files[0].size;
+  this.fromId="abc";
+    this.toId="efg";
+    console.log("sdgvfb")
+    console.log(size);
+
     var reader = new FileReader();
     let self = this;
     reader.onload = (function (theFile) {
       let me = self;
       return function (e) {
-        var binaryData = e.target.result;
-        var base64string = window.btoa(binaryData);
-        me.message = base64string;
+        // if(size>5000000)
+        // {
+        //   confirm("Please enter within 5mb size");
+         
+        // }
+        // else{
+          var binaryData = e.target.result;
+          var base64string = window.btoa(binaryData);
+          me.message = base64string;
+          console.log(base64string.length);
+        // }
+        
       }
 
     })
@@ -108,16 +140,29 @@ export class AppComponent {
 
   sendMessage(message) {
     // console.log('inside method');
-    console.log(this.message)
-    console.log(this.ext);
-    const message1: Message = {
-       base64Str:this.message,
-       ext1: this.ext,
-       fileName1:this.fileName,
-     
-    };
 
+    // console.log(this.message)
+    // console.log(this.ext);
+    // const message1: Message = {
+    //    base64Str:this.message,
+    //    ext1: this.ext,
+    //    fileName1:this.fileName,
+
+        //     var list-size=Object.keys(this.filelist).length;
+      //     var list-size=this.filelist.length; 
+     
+    //};
+   const formData=new FormData();
+   formData.append('file',this.userFile);
+   formData.append('fromid',this.fromId);
+   formData.append('toid',this.toId);
+   formData.append('filename',this.fileName);
+   formData.append('ext',this.ext);
+   this.webSocketService.saveUser(formData).subscribe(res => {
+    console.log(res);
+   
    // this.stompClient.send("/app/send/message", {}, this.message);
-   this.stompClient.send("/app/send/message", {}, JSON.stringify(message1));
-   }
+  //  this.stompClient.send("/app/send/message", {}, JSON.stringify(message1));
+   })
+}
 }

@@ -16,11 +16,13 @@
     </button>
     <!-- <input id="input" type="text" #input> -->
     <input #input type="file" id="files" name="files" (change)="handleFileSelect($event)" />
-
+    <button (click)="notifyMe()">Notify Me</button>
     <br/>
     <!-- <textarea id="base64" rows="5"></textarea> -->
     <a download href='#' #link>Download</a>
 </div>
+
+
 
 <!-- </div> -->
 

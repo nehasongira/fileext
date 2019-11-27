@@ -9,12 +9,14 @@ import {WebSocketService} from "./services/websocket.service";
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+   
  private base64string:String="abc";
   private base64str:String=" ";
     public notifications = 0;
    private stompClient;
    private message: string;
    private name: string;
+ 
     constructor(private webSocketService: WebSocketService) {
 
         this.stompClient = this.webSocketService.connect();
@@ -85,6 +87,9 @@ export class AppComponent {
      // console.log(this.base64string);
       //this.sendMessage(this.base64string);
     }
+
+
+ 
     
     sendMessage(message){
      // console.log('inside method');
@@ -97,5 +102,48 @@ export class AppComponent {
     //    // console.log(message);
     //     //  $('#input').val('');
         } 
+        
+        time(){
+        var now = new Date();
+        let date: Date= new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 0, 0, 0) - now;
+        if (millisTill10 < 0) {
+             millisTill10 += 86400000; // it's after 10am, try 10am tomorrow.
+        }
+        setTimeout(function(){alert("It's 10am!")}, millisTill10);
+      }
+
+
+        notifyMe() {
+          var name="hellllll"
+          if (!("Notification" in window)) {
+              console.log('Browser does not support notifications.');
+          } else {
+            const p: string = Notification['permission'];
+              // check if permission is already granted
+              if (p === 'granted') {
+                  // show notification here
+                  var notify = new Notification(name, {
+                      body: 'How are you doing?',
+                      
+                  });
+
+              } else {
+                  // request permission from user
+                  Notification.requestPermission().then(function (p) {
+                      if (p === 'granted') {
+                          // show notification here
+                          var notify = new Notification('Hi there!', {
+                              body: 'How are you doing?',
+                              icon: 'https://bit.ly/2DYqRrh',
+                          });
+                      } else {
+                          console.log('User blocked notifications.');
+                      }
+                  }).catch(function (err) {
+                      console.error(err);
+                  });
+              }
+          }
+      }
     
 }

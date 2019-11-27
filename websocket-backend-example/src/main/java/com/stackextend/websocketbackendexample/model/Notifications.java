@@ -1,5 +1,7 @@
 package com.stackextend.websocketbackendexample.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Notifications {
 
     public Notifications(int count, String name, String content) {
@@ -7,8 +9,17 @@ public class Notifications {
         this.name = name;
         this.content = content;
     }
-
+   private MultipartFile file;
     private int count;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     private String name;
     private String content;
 

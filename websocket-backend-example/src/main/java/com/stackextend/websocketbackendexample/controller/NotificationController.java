@@ -1,32 +1,42 @@
 package com.stackextend.websocketbackendexample.controller;
 
-import com.stackextend.websocketbackendexample.model.ChatMessage;
-import com.stackextend.websocketbackendexample.model.Notifications;
+import com.stackextend.websocketbackendexample.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.io.IOException;
+@CrossOrigin("*")
 @RestController
 public class NotificationController {
     private final SimpMessagingTemplate template;
 
+    private final FileService fileService;
     @Autowired
-    NotificationController(SimpMessagingTemplate template){
+    NotificationController(SimpMessagingTemplate template, FileService fileService){
         this.template = template;
+        this.fileService = fileService;
+    }
+//
+//    @MessageMapping("/send/message")
+//    public void onReceivedMessage(@Payload String message){
+//
+//        this.template.convertAndSend("/chat",  message);
+//    }
+    @PostMapping(value = "/api/files")
+    public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam String fromid,@RequestParam String toid,@RequestParam String filename,@RequestParam String ext) throws IOException {
+        this.fileService.storeFile(file,fromid,toid,filename,ext);
+
+    }
+    @GetMapping(value = "api/download")
+    public void getfilepath()
+    {
+        this.fileService.getfilepath();
     }
 
-    @MessageMapping("/send/message")
-    public void onReceivedMessage(@Payload String message){
-        this.template.convertAndSend("/chat",  message);
-    }
 
 //////////////////////////////////////////////////////////////////////
 //    @MessageMapping("/chat.sendMessage")
