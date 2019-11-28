@@ -31,6 +31,7 @@ export class WebSocketService {
       console.log("inside service");
       console.log(exten)
       console.log(filename)
+      console.log(lastext)
       let headers = new HttpHeaders();
       headers = headers.append('Accept', exten);
       

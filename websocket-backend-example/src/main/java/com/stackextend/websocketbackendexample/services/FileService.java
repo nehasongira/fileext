@@ -58,6 +58,7 @@ public class FileService {
         String filepathfromMongo=this.fileRepository.findpath(filename).getFilePath();
         String fileextfromMongo=this.fileRepository.findext(filename).getExt();
 
+
         response.setContentType(fileextfromMongo);
         response.setHeader("Content-Disposition", "attachment; filename=" + filename);
         response.setHeader("fileName", filename);
@@ -91,10 +92,3 @@ public class FileService {
 //        //Path pa=Paths.get(FILE_PATH);
 // File file = new File(FILE_PATH);
 //File file = new File("/home/cgi/trial/abc_efg_3ac.pdf");
-//        File file=new File(filepathfromMongo);
-//        System.out.println(filepathfromMongo);
-//        response.setContentType(fileextfromMongo);
-//        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
-//        response.setHeader("fileName", filename);
-//        return new FileSystemResource(file);
-//
