@@ -113,8 +113,6 @@ fileupload(event)
   this.fileName = event.target.files[0].name;
   var dotPosition = this.fileName.indexOf(".");
   this.lastext =this.fileName.substring(dotPosition, this.fileName.length);
-  //const lastext=event.target.files[0].split('.').pop();
-  
   this.userFile=file;
 }
 
@@ -123,36 +121,27 @@ downloadFileSystem() {
   this.webSocketService.downloadFileSystem(this.name,this.ext,this.lastext)
     .subscribe(response => {
       const filename = response.headers.get('fileName');
-      const ext2=response.headers.get('exten');
+      //const ext2=response.headers.get('exten');
       console.log("shhh")
       console.log(filename);
-      console.log(ext2);
-      this.saveFile(response.body,this.ext);
+      //console.log(ext2);
+      this.saveFile(response.body,this.ext,filename);
       //this.saveToFileSystem(event,'application/pdf');
     });
 }
-// saveToFileSystem(response, type) {
-//   const contentDispositionHeader: string = response.headers.get('Content-Disposition');
-//   const show:string=response.headers.get('fileName');
-//   const parts: string[] = contentDispositionHeader.split(';');
-//   const filename = parts[1].split('=')[1];
-//   const blob = new Blob([response.body], {
-//       type: type
-//   });
-//   // saveAs(blob, filename);
-// }
 
-saveFile(data: any,ext3? : string) {
+
+saveFile(data: any,ext3? : string,filename?:string) {
   
   const blob = new Blob([data], {type: ext3 || 'application/octet-stream'});
   console.log(blob);
   console.log(ext3);
-  var download = document.querySelector("a[ download ]");
-  var downloadUrl = URL.createObjectURL(blob);
-  console.log(downloadUrl);
+  // var download = document.querySelector("a[ download ]");
+  // var downloadUrl = URL.createObjectURL(blob);
+  // console.log(downloadUrl);
   //this.links.push({ links: this.sanitizer.bypassSecurityTrustUrl(downloadUrl),file_name:filename,extension:ext3 });
-  download.setAttribute( "href", downloadUrl );
-  //fileSaver.saveAs(blob, filename);
+  //download.setAttribute( "href", downloadUrl );
+  fileSaver.saveAs(blob, filename);
 }
 
 sendMessage(message) {
@@ -173,45 +162,45 @@ sendMessage(message) {
  this.webSocketService.saveUser(formData).subscribe(res => {
   console.log(res);
 })
-// this.stompClient.send("/app/send/message", {}, this.message);
+
  this.stompClient.send("/app/send/message", {}, JSON.stringify(message1));
 }
-  handleFileSelect(evt) {
+  // handleFileSelect(evt) {
 
-    var f = evt.target.files[0];
-    this.ext=evt.target.files[0].type;
-    this.fileName = evt.target.files[0].name;
-    var size=evt.target.files[0].size;
-  this.fromId="abc";
-    this.toId="efg";
-    console.log("sdgvfb")
-    console.log(size);
+  //   var f = evt.target.files[0];
+  //   this.ext=evt.target.files[0].type;
+  //   this.fileName = evt.target.files[0].name;
+  //   var size=evt.target.files[0].size;
+  // this.fromId="abc";
+  //   this.toId="efg";
+  //   console.log("sdgvfb")
+  //   console.log(size);
 
-    var reader = new FileReader();
-    let self = this;
-    reader.onload = (function (theFile) {
-      let me = self;
-      return function (e) {
-        // if(size>5000000)
-        // {
-        //   confirm("Please enter within 5mb size");
+  //   var reader = new FileReader();
+  //   let self = this;
+  //   reader.onload = (function (theFile) {
+  //     let me = self;
+  //     return function (e) {
+  //       // if(size>5000000)
+  //       // {
+  //       //   confirm("Please enter within 5mb size");
          
-        // }
-        // else{
-          var binaryData = e.target.result;
-          var base64string = window.btoa(binaryData);
-          me.message = base64string;
-          console.log(base64string.length);
-        // }
+  //       // }
+  //       // else{
+  //         var binaryData = e.target.result;
+  //         var base64string = window.btoa(binaryData);
+  //         me.message = base64string;
+  //         console.log(base64string.length);
+  //       // }
         
-      }
+  //     }
 
-    })
+  //   })
       
-      (f);
-    reader.readAsBinaryString(f);
+  //     (f);
+  //   reader.readAsBinaryString(f);
    
-  }
+  // }
 
   // clickAndDisable(link) {
   //   // disable subsequent clicks

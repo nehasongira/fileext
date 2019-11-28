@@ -62,17 +62,18 @@ public class FileService {
         //Path pa=Paths.get(FILE_PATH);
         File file = new File(FILE_PATH);
         //File file = new File("/home/cgi/trial/abc_efg_3ac.pdf");
-        response.setContentType("application/pdf");
+        response.setContentType("image/jpeg");
         response.setHeader("Content-Disposition", "attachment; filename=" + filename);
         response.setHeader("fileName", filename);
+        System.out.println();
         Resource resource = null;
 //        String pathss=FILE_DIRECTORY+filename+"."+"pdf";
 //        Path pa=Paths.get(pathss);
-        //resource = new FileSystemResource(FILE_DIRECTORY + filename+"."+"pdf");
+        resource = new FileSystemResource(FILE_PATH);
         System.out.println(resource);
         System.out.println("inside controller resource");
-        return new FileSystemResource(file);
-       // return resource;
+        //return new FileSystemResource(file);
+       return resource;
     }
 //    public String getfilepath(String fromid,String toid,String filename)
 //    {

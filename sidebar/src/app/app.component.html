@@ -11,12 +11,17 @@
 <form (ngSubmit)="downloadFileSystem()">
     <h2>button here</h2>
     <p>From {{this.fid}}</p>
-    <!-- <input [(ngModel)]="fileSystemName" name="file-system"> -->
-    <button [disabled]="!fileSystemName">Download file system</button>
+
     <button>{{this.name}}</button>
     <br>
     <br>
 </form>
+<!-- <p *ngFor="let link of links">
+
+
+    <a id="link" target='_blank' download [href]="link.links"> <button id="btn1" class="btn" onclick="downloadFileSystem()">{{this.name}}</button> </a>
+
+</p> -->
 
 
 <div class="send-button">
@@ -72,7 +77,7 @@
         <p>Sidenav content</p>
         <!-- <mat-nav-list> -->
         <!-- <p *ngFor="let link of links">
-            
+
 
             <a id="link" target='_blank' download [href]="link.links"> <button id="btn1" class="btn" onclick="myFunction(this)">{{link.file_name}}</button> </a>
 

@@ -2,6 +2,7 @@ package com.stackextend.websocketbackendexample.controller;
 
 import com.stackextend.websocketbackendexample.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,6 +14,7 @@ import org.springframework.core.io.Resource;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +23,7 @@ import java.nio.file.Paths;
 @RestController
 public class NotificationController {
     private final SimpMessagingTemplate template;
+    private static final String FILE_DIRECTORY = "/home/cgi/trial";
 
     private final FileService fileService;
     @Autowired
@@ -46,6 +49,15 @@ public class NotificationController {
         return fileService.getFileSystem(filename,lastext, response);
 
     }
+//    @GetMapping(value = "/api/download/{filename}/{lastext}")
+//    public InputStreamResource FileSystemResource (HttpServletResponse response,@PathVariable String filename,@PathVariable String lastext) throws IOException {
+//        response.setContentType("application/pdf");
+//        String FILE_PATH=FILE_DIRECTORY+'/'+filename+lastext;
+//        response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
+//        InputStreamResource resource = new InputStreamResource(new FileInputStream(FILE_PATH));
+//        return resource;
+//    }
+
 
 //    public Resource getfilepath(@RequestParam String filename)
 //    {
