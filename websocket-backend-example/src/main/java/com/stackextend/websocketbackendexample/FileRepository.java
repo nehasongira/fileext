@@ -10,8 +10,12 @@ import java.util.List;
 
 public interface FileRepository extends MongoRepository<Filess, String> {
 
-    @Query(value = "{'fileName': ?0}")
-    Filess findext(String filename);
+    @Query("{'filename': ?0}")
+    public Filess findpath(String fileName);
+
+    @Query("{'filename': ?0}")
+    public Filess findext(String fileName);
+
 
 //    @Query(value = "{'fromId': ?0,'toId': ?1,'fileName': ?2}")
 }

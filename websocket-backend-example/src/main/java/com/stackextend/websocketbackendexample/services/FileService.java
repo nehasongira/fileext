@@ -46,30 +46,25 @@ public class FileService {
         this.fileRepository.save(files);
     }
 
-    public Resource getFileSystem(String filename,String lastext ,HttpServletResponse response) {
+    public Resource getFileSystem(String filename,HttpServletResponse response) {
         System.out.println("inside controller-service");
-        return getResource(filename,lastext, response);
+        return getResource(filename, response);
     }
 
-    private Resource getResource(String filename,String lastext ,HttpServletResponse response) {
+    private Resource getResource(String filename ,HttpServletResponse response) {
 
-//        System.out.println(filename);
-//        String filepathfromMongo=this.fileRepository.findext(filename).getExt();
-////        System.out.println(filepathfromMongo);
-//        //String filepathfromMongo="abc_efg_18augmeal.pdf";
-       String FILE_PATH=FILE_DIRECTORY+'/'+filename+lastext;
-       System.out.println(FILE_PATH);
-        //Path pa=Paths.get(FILE_PATH);
-        File file = new File(FILE_PATH);
-        //File file = new File("/home/cgi/trial/abc_efg_3ac.pdf");
-        response.setContentType("image/jpeg");
+        System.out.println(filename);
+
+        String filepathfromMongo=this.fileRepository.findpath(filename).getFilePath();
+        String fileextfromMongo=this.fileRepository.findext(filename).getExt();
+
+        response.setContentType(fileextfromMongo);
         response.setHeader("Content-Disposition", "attachment; filename=" + filename);
         response.setHeader("fileName", filename);
         System.out.println();
         Resource resource = null;
-//        String pathss=FILE_DIRECTORY+filename+"."+"pdf";
-//        Path pa=Paths.get(pathss);
-        resource = new FileSystemResource(FILE_PATH);
+
+       resource = new FileSystemResource(filepathfromMongo);
         System.out.println(resource);
         System.out.println("inside controller resource");
         //return new FileSystemResource(file);
@@ -90,3 +85,16 @@ public class FileService {
 
 
 }
+//       //String filepathfromMongo="abc_efg_18augmeal.pdf";
+//       String FILE_PATH=FILE_DIRECTORY+'/'+filename+lastext;
+//       System.out.println(FILE_PATH);
+//        //Path pa=Paths.get(FILE_PATH);
+// File file = new File(FILE_PATH);
+//File file = new File("/home/cgi/trial/abc_efg_3ac.pdf");
+//        File file=new File(filepathfromMongo);
+//        System.out.println(filepathfromMongo);
+//        response.setContentType(fileextfromMongo);
+//        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+//        response.setHeader("fileName", filename);
+//        return new FileSystemResource(file);
+//

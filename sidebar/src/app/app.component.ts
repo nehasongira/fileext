@@ -59,9 +59,10 @@ export class AppComponent {
         if (message.body) {
            var fileobj=JSON.parse(message.body);
           this.exten=fileobj.ext;
-          this.name=fileobj.fromid+"_"+fileobj.toid+"_"+fileobj.fileName1; 
+          
           this.fid=fileobj.fromid;
           this.lastext1=fileobj.lastext;
+          this.name=fileobj.fromid+"_"+fileobj.toid+"_"+fileobj.fileName1; 
           console.log(this.name);
           console.log("jhbefjnd");
 

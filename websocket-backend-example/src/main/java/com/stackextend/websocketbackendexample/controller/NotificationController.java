@@ -12,6 +12,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +22,7 @@ import java.nio.file.Paths;
 
 @CrossOrigin("*")
 @RestController
+@MultipartConfig
 public class NotificationController {
     private final SimpMessagingTemplate template;
     private static final String FILE_DIRECTORY = "/home/cgi/trial";
@@ -39,14 +41,17 @@ public class NotificationController {
     }
     @PostMapping(value = "/api/files")
     public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam String fromid,@RequestParam String toid,@RequestParam String filename,@RequestParam String ext,@RequestParam String lastext) throws IOException {
+        System.out.println("file name: "+filename);
         this.fileService.storeFile(file,fromid,toid,filename,ext,lastext);
 
     }
 
     @GetMapping(value = "/api/download/{filename}/{lastext}")
     public Resource getFileFromFileSystem(@PathVariable String filename,@PathVariable String lastext, HttpServletResponse response) {
-        System.out.println("inside controller");
-        return fileService.getFileSystem(filename,lastext, response);
+       // System.out.println("inside controller");
+        System.out.println("controller" +filename+" ."+lastext);
+        System.out.println(lastext);
+        return fileService.getFileSystem(filename, response);
 
     }
 //    @GetMapping(value = "/api/download/{filename}/{lastext}")
